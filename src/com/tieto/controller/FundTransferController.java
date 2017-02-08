@@ -22,14 +22,24 @@ public class FundTransferController {
 
 	@RequestMapping(value = "/Submit", method = RequestMethod.POST)
 	public ModelAndView submit(@ModelAttribute("emp") FundTransfer ft) {
-		dao.Submit(ft);
-		return new ModelAndView("redirect:/view");
+		if(dao.Submit(ft)==1)
+		{
+		String message = "Fund is Transferred successfully...";
+		return new ModelAndView("view","message",message);
+		}
+		else
+		{
+			String message = "Fund is Insuficient to transfer...";
+			return new ModelAndView("view","message",message);
+		}
+		
 	}
 
 	@RequestMapping("/view")
 	public ModelAndView view() {
-		String message = "Fund is Transferred successfully...";
-		return new ModelAndView("view", "message", message);
+		
+		return new ModelAndView("redirect:/view");
 	}
 
 }
+
